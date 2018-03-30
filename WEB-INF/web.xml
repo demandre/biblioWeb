@@ -3,7 +3,11 @@
 	<servlet>
 		<servlet-name>Login</servlet-name>
         	<servlet-class>application.LoginServlet</servlet-class>
-	</servlet>
+        	<init-param>
+        	 <param-name>data class</param-name>
+        	 <param-value>persistantdata.MediathequeData</param-value>
+        	</init-param>
+    </servlet>
 	<servlet>
 		<servlet-name>LoginVerification</servlet-name>
         	<servlet-class>application.LoginVerificationServlet</servlet-class>

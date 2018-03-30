@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import data.User;
 
 
 public class LoginVerificationServlet extends HttpServlet {
@@ -19,7 +18,7 @@ public class LoginVerificationServlet extends HttpServlet {
     { 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        User user = (User) request.getSession(true).getAttribute("user");
+        String sessionVar = (String)request.getSession(true).getAttribute("user");
         out.println("<html>");
         out.println("<head>");
 
@@ -28,7 +27,7 @@ public class LoginVerificationServlet extends HttpServlet {
         out.println("</head>");
         out.println("<body bgcolor=\"white\">");
 
-        out.println("<h1>" + "you are" + user + " !!!!!</h1>");
+        out.println("<h1>" + "you are" + sessionVar + " !!!!!</h1>");
         out.println("</body>");
         out.println("</html>");
     }
