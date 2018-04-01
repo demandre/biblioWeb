@@ -5,6 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import mediatheque.Cd;
+import mediatheque.Document;
+import mediatheque.Hebdomadaire;
+import mediatheque.Livre;
 
 
 public class DocumentRequete{
@@ -80,6 +87,103 @@ public class DocumentRequete{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	public static List<Document> getDocumentEmprunteParUser(String username) {
+		try {
+			String sql = "select * from document where empruntor = ?";
+			PreparedStatement req = CONNECT.prepareStatement(sql);
+			req.setString(1,username);
+			ResultSet ans = req.executeQuery();
+			List<Document> docList = new ArrayList<Document>();
+			while(ans.next()) {
+				int type = ans.getInt("type");
+				if(type == Document.LIVRE) {
+					docList.add(new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+				else if(type == Document.HEBDOMADAIRE) {
+					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+				else if(type == Document.CD) {
+					docList.add(new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+			}
+			req.close();
+			ans.close();
+			return docList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static List<Document> getAllDocuments() {
+		try {
+			String sql = "select * from document";
+			PreparedStatement req = CONNECT.prepareStatement(sql);
+			ResultSet ans = req.executeQuery();
+			List<Document> docList = new ArrayList<Document>();
+			while(ans.next()) {
+				int type = ans.getInt("type");
+				if(type == Document.LIVRE) {
+					docList.add(new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+				else if(type == Document.HEBDOMADAIRE) {
+					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+				else if(type == Document.CD) {
+					docList.add(new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+				}
+			}
+			req.close();
+			ans.close();
+			return docList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Document getDocumentById(int id) {
+		try {
+			String sql = "select * from document where id = ?";
+			PreparedStatement req = CONNECT.prepareStatement(sql);
+			req.setInt(1,id);
+			ResultSet ans = req.executeQuery();
+			Document doc = null;
+			while(ans.next()) {
+				int type = ans.getInt("type");
+				if(type == Document.LIVRE) {
+					doc = new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+				}
+				else if(type == Document.HEBDOMADAIRE) {
+					doc = new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+				}
+				else if(type == Document.CD) {
+					doc = new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+				}
+			}
+			req.close();
+			ans.close();
+			return doc;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void insertDocument(int type, String nom, String auteur) {
+		try {
+			String sql = "insert into document (type,nom,auteur) values(?,?,?)";
+			PreparedStatement req = CONNECT.prepareStatement(sql);
+			req.setInt(1,type);
+			req.setString(2,nom);
+			req.setString(3,auteur);
+			req.executeUpdate();
+			req.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	

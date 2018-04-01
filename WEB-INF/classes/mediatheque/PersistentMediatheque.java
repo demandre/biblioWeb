@@ -11,5 +11,10 @@ public interface PersistentMediatheque {
 	Utilisateur getUser(String login, String password);
 	
 	void nouveauDocument(int type, Object... args );
+	
+	boolean emprunter(Document d, Utilisateur a);
 
+	void retour(Document d);
+
+	List<Document> getUserDocuments(Utilisateur a);
 }

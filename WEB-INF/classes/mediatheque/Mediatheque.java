@@ -41,13 +41,15 @@ public class Mediatheque {
 	// enregistre l'emprunt par l'abonné a du document d)
 
 	public void emprunt(Document d, Utilisateur a) throws EmpruntException {
-		d.emprunter(a);
+		if(data.emprunter(d,a) == false) {
+			throw new EmpruntException();
+		}
 	}
 
 	//enregistre le retour du document d)
 
 	public void retour (Document d) {
-		d.retour();
+		data.retour(d);
 	}
 
 // *********************** délégation **********************
@@ -56,6 +58,10 @@ public class Mediatheque {
 
 	public List<Document> tousLesDocuments() {
 		return data.tousLesDocuments();
+	}
+	
+	public List<Document> getUserDocuments(Utilisateur a) {
+		return data.getUserDocuments(a);
 	}
 
 	// renvoie le user de login et passwd 

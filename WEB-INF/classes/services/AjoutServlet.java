@@ -40,7 +40,20 @@ public class AjoutServlet extends HttpServlet{
 	        out.println("<a href=\"../abonne\">Retourner au menu Abonné</a>");
         }
         else {
-        	out.println("<p>Ajouter un document:</p>");
+        	out.println("<form action=\"./bibliothecaire/ajout\" method=\"post\">");
+        	out.println("<fieldset><legend>Ajoutez un document!</legend>");
+        	out.println("<p>" + 
+        			"                <label>type:</label>" + 
+        			"                <input type=\"radio\" name=\"type\" value=\"1\" checked> Livre" + 
+        			"                <input type=\"radio\" name=\"type\" value=\"2\"> Hebdo" + 
+        			"                 <input type=\"radio\" name=\"type\" value=\"3\"> CD" + 
+        			"                <label>nom:</label>" + 
+        			"                <input name=\"nom\" type=\"text\" />" + 
+        			"				<label>auteur</label>" + 
+        			"                <input name=\"auteur\" type=\"text\" />" + 
+        			"                <input type=\"submit\" name=\"submit\" value=\"Envoyer\" />" + 
+        			"            </p>");
+        	out.println("</fieldset></form>");
             out.println("<a href=\"../bibliothecaire\">Retourner au menu principal</a>");
         }
         out.println("</body>");
