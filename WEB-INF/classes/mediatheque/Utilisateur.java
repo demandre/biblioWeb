@@ -2,19 +2,25 @@ package mediatheque;
 
 public class Utilisateur {
 	
-	final int BIBLIOTHECAIRE=1;
-	final int ABONNE=2;
+	public final static int BIBLIOTHECAIRE=1;
+	public final static int ABONNE=2;
 	
 	private String login;
 	private int type;
+	private int id;
 	
-	public Utilisateur(String login, int type){
+	public Utilisateur(String login, int type, int id){
 		this.type=type;
 		this.login=login;
+		this.id=id;
 	}
 	
 	public int getType(){
 		return this.type;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public String toString(){

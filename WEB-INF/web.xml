@@ -2,24 +2,54 @@
 <web-app>    
 	<servlet>
 		<servlet-name>Login</servlet-name>
-        	<servlet-class>application.LoginServlet</servlet-class>
+        	<servlet-class>services.LoginServlet</servlet-class>
         	<init-param>
         	 <param-name>data class</param-name>
         	 <param-value>persistantdata.MediathequeData</param-value>
         	</init-param>
+        	<init-param>
+        	 <param-name>admin login</param-name>
+        	 <param-value>admin</param-value>
+        	</init-param>
+        	<init-param>
+        	 <param-name>admin password</param-name>
+        	 <param-value>admin</param-value>
+        	</init-param>
     </servlet>
+    
 	<servlet>
-		<servlet-name>LoginVerification</servlet-name>
-        	<servlet-class>application.LoginVerificationServlet</servlet-class>
+		<servlet-name>Abonne</servlet-name>
+        <servlet-class>services.AbonneServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Bibliothecaire</servlet-name>
+        <servlet-class>services.BibliothecaireServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+        <servlet-class>services.LogoutServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-        	<servlet-name>Login</servlet-name>
-        	<url-pattern>/login</url-pattern>
-    	</servlet-mapping>
+       	<servlet-name>Login</servlet-name>
+       	<url-pattern>/login</url-pattern>
+    </servlet-mapping>
 	
-    	<servlet-mapping>
-        	<servlet-name>LoginVerification</servlet-name>
-        	<url-pattern>/verification</url-pattern>
-    	</servlet-mapping>
+   	<servlet-mapping>
+        <servlet-name>Abonne</servlet-name>
+        <url-pattern>/abonne</url-pattern>
+    </servlet-mapping>
+    	
+    <servlet-mapping>
+      	<servlet-name>Bibliothecaire</servlet-name>
+        <url-pattern>/bibliothecaire</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+       	<servlet-name>Logout</servlet-name>
+       	<url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
 </web-app>

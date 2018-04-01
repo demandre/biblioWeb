@@ -11,7 +11,8 @@ public class MediathequeData implements PersistentMediatheque {
 // Jean-François Brette 01/01/2018
 	static {
 		Mediatheque.getInstance().setData(new MediathequeData());
-		Requete.init("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306/biblioweb");
+		DocumentRequete.init("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306/biblioweb");
+		UtilisateurRequete.init("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/biblioweb");
 	}
 
 	private MediathequeData() {
@@ -27,8 +28,17 @@ public class MediathequeData implements PersistentMediatheque {
 	// si pas trouvé, renvoie null
 	@Override
 	public Utilisateur getUser(String login, String password) {
-		int type = Requete.select("Utilisateur",new String[]{"type"},new String[]{"username",login});
-		return new Utilisateur(login,type);
+		synchronized(this) {
+			if( UtilisateurRequete.verifLogin(login,password) ) {
+				Integer type = UtilisateurRequete.getUserType(login);
+				Integer id = UtilisateurRequete.getIdByUsername(login);
+				if(type == null || id == null) {
+					return null;
+				}
+				else return new Utilisateur(login,type,id);
+			}
+			else return null;
+		}
 	}
 
 	// va récupérer le document de numéro numDocument dans la BD
