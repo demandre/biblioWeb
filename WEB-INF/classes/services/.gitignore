@@ -4,3 +4,7 @@
 /AbonneServlet.class
 /BibliothecaireServlet.class
 /LogoutServlet.class
+/EmpruntsServlet.class
+/EmpruntServlet.class
+/RetourServlet.class
+/AjoutServlet.class
