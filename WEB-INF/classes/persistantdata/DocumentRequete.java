@@ -90,23 +90,23 @@ public class DocumentRequete{
 		}
 	}
 	
-	public static List<Document> getDocumentEmprunteParUser(String username) {
+	public static List<Document> getDocumentEmprunteParUser(int id) {
 		try {
 			String sql = "select * from document where empruntor = ?";
 			PreparedStatement req = CONNECT.prepareStatement(sql);
-			req.setString(1,username);
+			req.setInt(1,id);
 			ResultSet ans = req.executeQuery();
 			List<Document> docList = new ArrayList<Document>();
 			while(ans.next()) {
 				int type = ans.getInt("type");
 				if(type == Document.LIVRE) {
-					docList.add(new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Livre(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 				else if(type == Document.HEBDOMADAIRE) {
-					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 				else if(type == Document.CD) {
-					docList.add(new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Cd(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 			}
 			req.close();
@@ -127,13 +127,13 @@ public class DocumentRequete{
 			while(ans.next()) {
 				int type = ans.getInt("type");
 				if(type == Document.LIVRE) {
-					docList.add(new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Livre(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 				else if(type == Document.HEBDOMADAIRE) {
-					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Hebdomadaire(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 				else if(type == Document.CD) {
-					docList.add(new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur")));
+					docList.add(new Cd(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur")));
 				}
 			}
 			req.close();
@@ -155,13 +155,13 @@ public class DocumentRequete{
 			while(ans.next()) {
 				int type = ans.getInt("type");
 				if(type == Document.LIVRE) {
-					doc = new Livre(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+					doc = new Livre(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur"));
 				}
 				else if(type == Document.HEBDOMADAIRE) {
-					doc = new Hebdomadaire(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+					doc = new Hebdomadaire(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur"));
 				}
 				else if(type == Document.CD) {
-					doc = new Cd(ans.getInt("id"),ans.getString("nom"),ans.getString("auteur"));
+					doc = new Cd(ans.getInt("id"),ans.getString("titre"),ans.getString("auteur"));
 				}
 			}
 			req.close();
@@ -175,7 +175,7 @@ public class DocumentRequete{
 	
 	public static void insertDocument(int type, String nom, String auteur) {
 		try {
-			String sql = "insert into document (type,nom,auteur) values(?,?,?)";
+			String sql = "insert into document (type,titre,auteur) values(?,?,?)";
 			PreparedStatement req = CONNECT.prepareStatement(sql);
 			req.setInt(1,type);
 			req.setString(2,nom);

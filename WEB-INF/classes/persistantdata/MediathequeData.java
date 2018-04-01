@@ -20,12 +20,12 @@ public class MediathequeData implements PersistentMediatheque {
 
 	// renvoie la liste de tous les documents de la bibliothèque
 	@Override
-	public List<Document> tousLesDocuments() {
+	public synchronized List<Document> tousLesDocuments() {
 		return DocumentRequete.getAllDocuments();
 	}
 	
-	public List<Document> getUserDocuments(Utilisateur a) {
-		return DocumentRequete.getDocumentEmprunteParUser(a.toString());
+	public synchronized List<Document> getUserDocuments(Utilisateur a) {
+		return DocumentRequete.getDocumentEmprunteParUser(a.getId());
 	}
 
 	// va récupérer le User dans la BD et le renvoie
@@ -49,22 +49,22 @@ public class MediathequeData implements PersistentMediatheque {
 	// et le renvoie
 	// si pas trouvé, renvoie null
 	@Override
-	public Document getDocument(int numDocument) {
+	public synchronized Document getDocument(int numDocument) {
 		return DocumentRequete.getDocumentById(numDocument);
 	}
 
 	@Override
-	public void nouveauDocument(int type, Object... args) {
+	public synchronized void nouveauDocument(int type, Object... args) {
 		DocumentRequete.insertDocument(type,(String)args[0],(String)args[1]);
 	}
 
 	@Override
-	public boolean emprunter(Document d, Utilisateur a) {
+	public synchronized boolean emprunter(Document d, Utilisateur a) {
 		return DocumentRequete.emprunter(d.getId(),a.getId());
 	}
 
 	@Override
-	public void retour(Document d) {
+	public synchronized void retour(Document d) {
 		DocumentRequete.retourner(d.getId());
 	}
 

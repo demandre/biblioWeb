@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mediatheque.Document;
+import mediatheque.Mediatheque;
 import mediatheque.Utilisateur;
 
 public class EmpruntsServlet extends HttpServlet{
@@ -40,6 +42,11 @@ public class EmpruntsServlet extends HttpServlet{
 	        }
 	        else {
 	        	out.println("<p>Liste de vos emprunts:</p>");
+	        	out.println("<p>Id | Type | Nom | Auteur</p>");
+	        	for(Document doc : Mediatheque.getInstance().getUserDocuments(user)){
+	        		String[] docString = (String[])doc.affiche();
+	        		out.println("<p>" + docString[0] + " " + docString[1] + " "  + docString[2] + " "  + docString[3] + "</p><br>");
+	        	}
 	            out.println("<a href=\"../abonne\">Retourner au menu principal</a>");
 	        }
 	        out.println("</body>");

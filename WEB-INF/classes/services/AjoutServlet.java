@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mediatheque.Mediatheque;
 import mediatheque.Utilisateur;
 
 public class AjoutServlet extends HttpServlet{
@@ -40,7 +41,7 @@ public class AjoutServlet extends HttpServlet{
 	        out.println("<a href=\"../abonne\">Retourner au menu Abonné</a>");
         }
         else {
-        	out.println("<form action=\"./bibliothecaire/ajout\" method=\"post\">");
+        	out.println("<form action=\"./ajout\" method=\"post\">");
         	out.println("<fieldset><legend>Ajoutez un document!</legend>");
         	out.println("<p>" + 
         			"                <label>type:</label>" + 
@@ -59,4 +60,22 @@ public class AjoutServlet extends HttpServlet{
         out.println("</body>");
         out.println("</html>");
     }
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws IOException, ServletException
+	    { 
+	        response.setContentType("text/html");
+	        PrintWriter out = response.getWriter();
+	        out.println("<html>");
+	        out.println("<head>");
+	        String title = "BiblioWeb login";
+	        out.println("<title>" + title  + "</title>");
+	        out.println("</head>");
+	        out.println("<body bgcolor=\"grey\">");
+	        Mediatheque.getInstance().nouveauDocument(Integer.parseInt(request.getParameter("type")),new Object[] {request.getParameter("nom"),request.getParameter("auteur")});
+	        out.println("<p>Le document a bien été ajouté.</p>");
+            out.println("<a href=\"../bibliothecaire/ajout\">Retourner a la page d'ajout</a>");
+	        out.println("</body>");
+	        out.println("</html>");
+	    }
 }
